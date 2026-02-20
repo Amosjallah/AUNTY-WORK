@@ -47,7 +47,7 @@ export default function Navbar() {
                 {/* Logo - Center on mobile, Left on desktop */}
                 <div className="flex-1 md:flex-none text-center md:text-left">
                     <Link href="/" className="text-2xl md:text-3xl font-serif font-bold tracking-tight text-foreground">
-                        Lumière
+                        Aunty Work
                     </Link>
                 </div>
 

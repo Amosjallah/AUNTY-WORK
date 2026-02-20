@@ -61,9 +61,13 @@ export default function AboutPage() {
                             transition={{ delay: 0.2 }}
                             className="text-lg md:text-xl text-foreground/60 font-light leading-relaxed mb-10"
                         >
-                            Lumière was founded on a simple realization: the modern world is fast, but beauty requires patience.
+                            Aunty Work was founded on a simple realization: the modern world is fast, but beauty requires patience.
                             We returned to the origins of botanical healing to create a sanctuary for your skin.
                         </motion.p>
+                        <blockquote className="border-l-2 border-primary pl-8 italic text-lg text-foreground/60 mb-8 py-2">
+                            "Aunty Work transformed my morning ritual into a luxury experience I actually look forward to."
+                            <footer className="mt-4 text-sm font-sans font-bold not-italic uppercase tracking-widest">— Aunty, Founder</footer>
+                        </blockquote>
                     </div>
                 </div>
             </section>

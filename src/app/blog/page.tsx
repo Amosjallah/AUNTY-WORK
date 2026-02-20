@@ -21,7 +21,7 @@ export default function JournalPage() {
             title: "Crafting Your Evening Sanctuary",
             excerpt: "How to turn your nightly skincare routine into a meditative practice for better sleep and brighter skin.",
             date: "Feb 10, 2024",
-            author: "Sarah Lumière",
+            author: "Aunty",
             category: "Mindfulness",
             imageColor: "#F2E9E1"
         },
@@ -45,7 +45,7 @@ export default function JournalPage() {
                         animate={{ opacity: 1, y: 0 }}
                         className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary mb-4 block"
                     >
-                        Lumière Journal
+                        Aunty Work Journal
                     </motion.span>
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}

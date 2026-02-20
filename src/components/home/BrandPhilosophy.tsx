@@ -57,7 +57,7 @@ export default function BrandPhilosophy() {
                             viewport={{ once: true }}
                             className="text-primary font-medium tracking-[0.3em] uppercase mb-4 block text-sm"
                         >
-                            The Lumière Way
+                            The Aunty Work Way
                         </motion.span>
                         <h2 className="text-4xl md:text-6xl font-serif leading-tight mb-8">
                             Beauty is the <br />
@@ -67,7 +67,7 @@ export default function BrandPhilosophy() {
                             We believe that skincare is more than just a routine—it's a moment of connection with yourself. Our products are designed to turn your bathroom into a sanctuary, and your skin into a radiant canvas.
                         </p>
                         <blockquote className="border-l-2 border-primary pl-8 italic text-lg text-foreground/60 mb-8 py-2">
-                            "Lumière transformed my morning ritual into a luxury experience I actually look forward to."
+                            "Aunty Work transformed my morning ritual into a luxury experience I actually look forward to."
                             <footer className="mt-4 text-sm font-sans font-bold not-italic uppercase tracking-widest">— Sophia R., Founder</footer>
                         </blockquote>
                     </div>

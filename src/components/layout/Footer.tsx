@@ -8,9 +8,9 @@ export default function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
                     {/* Brand Column */}
                     <div className="col-span-1 md:col-span-1">
-                        <h3 className="text-2xl font-serif font-bold mb-6">Lumière</h3>
+                        <h3 className="text-2xl font-serif font-bold mb-6">Aunty Work</h3>
                         <p className="text-foreground/70 text-sm leading-relaxed mb-6">
-                            Clean, effective, and luxurious skincare designed to reveal your natural radiance. Ethically sourced and scientifically proven.
+                            Clean, effective, and luxurious skin care designed to reveal your natural radiance. Ethically sourced and scientifically proven.
                         </p>
                         <div className="flex gap-4">
                             <a href="#" className="p-2 rounded-full bg-white border border-accent hover:border-primary hover:text-primary transition-all">
@@ -72,7 +72,7 @@ export default function Footer() {
                 </div>
 
                 <div className="pt-8 border-t border-accent/20 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-foreground/50">
-                    <p>&copy; {new Date().getFullYear()} Lumière Skincare. All rights reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} Aunty Work Skin Care. All rights reserved.</p>
                     <div className="flex gap-6">
                         <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
                         <Link href="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>

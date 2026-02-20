@@ -38,7 +38,7 @@ export default function Hero() {
                         <span className="italic text-primary">Natural</span> Glow
                     </h1>
                     <p className="text-lg md:text-xl text-foreground/70 mb-10 leading-relaxed font-light">
-                        Luxury skincare formulated with rare botanicals to nourish your soul and rejuvenate your skin. Experience the Lumière difference.
+                        Luxury skincare formulated with rare botanicals to nourish your soul and rejuvenate your skin. Experience the Aunty Work difference.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4">
                         <Button size="lg" variant="luxury">
@@ -77,7 +77,7 @@ export default function Hero() {
                     <div className="w-full h-full bg-[#E8DED1] rounded-sm overflow-hidden relative shadow-2xl">
                         {/* Placeholder for Hero Image */}
                         <div className="absolute inset-0 flex items-center justify-center text-primary/20 font-serif text-4xl italic">
-                            Lumière Essence
+                            Aunty Work Essence
                         </div>
                         {/* Gradient overlay for premium feel */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />

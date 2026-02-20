@@ -17,8 +17,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Lumière – Luxury Skincare",
-  description: "Premium skincare for radiant, glowing skin.",
+  title: "Aunty Work – Luxury Skin Care",
+  description: "Premium skin care for radiant, glowing skin.",
 };
 
 export default function RootLayout({

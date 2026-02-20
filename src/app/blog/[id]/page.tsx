@@ -19,7 +19,7 @@ export default function BlogPostPage() {
             category: "Rituals",
             imageColor: "#F5EFDA",
             content: `
-                <p>Botanical serums represent the pinnacle of clean beauty, merging the ancient wisdom of herbalism with the precision of modern dermatological science. At Lumière, we believe that the skin is a living ecosystem that thrives best when nourished with ingredients it recognizes as its own.</p>
+                <p>Botanical serums represent the pinnacle of clean beauty, merging the ancient wisdom of herbalism with the precision of modern dermatological science. At Aunty Work, we believe that the skin is a living ecosystem that thrives best when nourished with ingredients it recognizes as its own.</p>
                 
                 <h2>Why Plant-Based Lipids?</h2>
                 <p>Unlike synthetic emollients that merely sit on the surface of the skin, plant-based lipids possess a molecular structure remarkably similar to our skin's natural sebum. This allows them to integrate seamlessly into the skin's barrier, delivering deep hydration without clogging pores.</p>
@@ -42,7 +42,7 @@ export default function BlogPostPage() {
         "evening-skincare-ritual": {
             title: "Crafting Your Evening Sanctuary",
             date: "Feb 10, 2024",
-            author: "Sarah Lumière",
+            author: "Aunty Work",
             category: "Mindfulness",
             imageColor: "#F2E9E1",
             content: `
@@ -154,7 +154,7 @@ export default function BlogPostPage() {
                 {/* Newsletter Box */}
                 <div className="max-w-4xl mx-auto mt-24 p-12 bg-accent/5 rounded-sm text-center border border-accent/10">
                     <h3 className="text-2xl font-serif font-bold mb-4">Never miss a ritual</h3>
-                    <p className="text-foreground/50 font-light mb-8 max-w-lg mx-auto italic">Join our Luminary community to receive weekly wisdom on botanical skincare and mindful living.</p>
+                    <p className="text-foreground/50 font-light mb-8 max-w-lg mx-auto italic">Join our Luminary community to receive weekly wisdom on botanical skin care and mindful living.</p>
                     <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
                         <input
                             type="email"
