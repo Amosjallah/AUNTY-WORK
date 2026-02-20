@@ -54,7 +54,7 @@ export default function AboutPage() {
                         >
                             Beauty Born from <br />
                             <span className="italic font-light">Natural Wisdom</span>
-                        </h1 >
+                        </motion.h1>
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
