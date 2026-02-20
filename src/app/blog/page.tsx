@@ -4,37 +4,32 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 import { Calendar, User, ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import { supabase } from "@/utils/supabase";
 
 export default function JournalPage() {
-    const posts = [
-        {
-            id: "botanical-serums-101",
-            title: "The Science of Botanical Serums",
-            excerpt: "Discover why plant-based lipids are the key to restoring your skin's natural barrier and luminescence.",
-            date: "Feb 15, 2024",
-            author: "Dr. Elena Rossi",
-            category: "Rituals",
-            imageColor: "#F5EFDA"
-        },
-        {
-            id: "evening-skincare-ritual",
-            title: "Crafting Your Evening Sanctuary",
-            excerpt: "How to turn your nightly skincare routine into a meditative practice for better sleep and brighter skin.",
-            date: "Feb 10, 2024",
-            author: "Aunty",
-            category: "Mindfulness",
-            imageColor: "#F2E9E1"
-        },
-        {
-            id: "winter-skin-protection",
-            title: "Winter Skin: A Protection Guide",
-            excerpt: "Essential tips and ingredients to keep your skin hydrated and glowing during the coldest months of the year.",
-            date: "Feb 05, 2024",
-            author: "Mark Thompson",
-            category: "Education",
-            imageColor: "#E5E7EB"
+    const [posts, setPosts] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchPosts() {
+            const { data } = await supabase
+                .from('blog_posts')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (data) {
+                setPosts(data.map(post => ({
+                    ...post,
+                    imageColor: post.image_color // Mapping snake_case to camelCase for the UI
+                })));
+            }
+            setLoading(false);
         }
-    ];
+        fetchPosts();
+    }, []);
+
+    if (loading) return <div className="min-h-screen flex items-center justify-center font-serif italic text-foreground/40 text-xl">Loading Journal...</div>;
 
     return (
         <div className="bg-background pt-24 pb-20">

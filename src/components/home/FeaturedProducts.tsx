@@ -3,45 +3,38 @@
 import ProductCard from "@/components/ui/ProductCard";
 import { Button } from "@/components/ui/Button";
 import { motion } from "framer-motion";
-
-const products = [
-    {
-        id: "1",
-        name: "Golden Elixir Serum",
-        category: "Anti-Aging",
-        price: 125.0,
-        rating: 4.9,
-        imageColor: "#F5EFDA",
-        isNew: true,
-    },
-    {
-        id: "2",
-        name: "Rose Dew Moisturizer",
-        category: "Moisturizers",
-        price: 85.0,
-        rating: 4.8,
-        imageColor: "#F2Dbd5",
-    },
-    {
-        id: "3",
-        name: "Pure Silk Cleanser",
-        category: "Cleansers",
-        price: 45.0,
-        rating: 4.7,
-        imageColor: "#EBF3F5",
-    },
-    {
-        id: "4",
-        name: "Midnight Renew Cream",
-        category: "Repair",
-        price: 110.0,
-        rating: 5.0,
-        imageColor: "#E5E5E5",
-        isNew: true,
-    },
-];
+import { useEffect, useState } from "react";
+import { supabase } from "@/utils/supabase";
 
 export default function FeaturedProducts() {
+    const [products, setProducts] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchProducts() {
+            const { data, error } = await supabase
+                .from('products')
+                .select('*')
+                .limit(4);
+
+            if (data) {
+                const mappedProducts = data.map(p => ({
+                    id: p.id,
+                    name: p.name,
+                    category: p.category,
+                    price: p.price,
+                    rating: p.rating,
+                    imageColor: p.image_color || "#F5F5F5",
+                    isNew: true // Placeholder
+                }));
+                setProducts(mappedProducts);
+            }
+            setLoading(false);
+        }
+        fetchProducts();
+    }, []);
+
+    if (loading) return null;
     return (
         <section className="py-24 bg-white">
             <div className="container-custom">

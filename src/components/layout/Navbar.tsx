@@ -72,9 +72,9 @@ export default function Navbar() {
                     <button className="hidden md:block hover:text-primary transition-colors">
                         <Search className="w-5 h-5" />
                     </button>
-                    <button className="hidden md:block hover:text-primary transition-colors">
+                    <Link href="/auth" className="hidden md:block hover:text-primary transition-colors">
                         <User className="w-5 h-5" />
-                    </button>
+                    </Link>
                     <Link href="/cart" className="hover:text-primary transition-colors relative">
                         <ShoppingBag className="w-5 h-5" />
                         <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] text-white">
@@ -108,9 +108,9 @@ export default function Navbar() {
                                 <button className="flex flex-col items-center gap-1 text-xs uppercase tracking-wider hover:text-primary">
                                     <Search className="w-6 h-6" /> Search
                                 </button>
-                                <button className="flex flex-col items-center gap-1 text-xs uppercase tracking-wider hover:text-primary">
+                                <Link href="/auth" className="flex flex-col items-center gap-1 text-xs uppercase tracking-wider hover:text-primary" onClick={() => setIsMobileMenuOpen(false)}>
                                     <User className="w-6 h-6" /> Account
-                                </button>
+                                </Link>
                             </div>
                         </nav>
                     </motion.div>

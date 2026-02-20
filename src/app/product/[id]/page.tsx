@@ -1,32 +1,73 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { products, Product } from "@/data/products";
 import { Button } from "@/components/ui/Button";
 import { Star, Minus, Plus, Heart, Share2, ShieldCheck, Truck, RotateCcw } from "lucide-react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useParams, useRouter } from "next/navigation";
 import ProductCard from "@/components/ui/ProductCard";
+import { supabase } from "@/utils/supabase";
+
+const iconMap: Record<string, any> = {
+    ShieldCheck,
+    Truck,
+    RotateCcw
+};
 
 export default function DynamicProductPage() {
     const params = useParams();
     const router = useRouter();
     const id = params.id as string;
 
-    const [product, setProduct] = useState<Product | null>(null);
+    const [product, setProduct] = useState<any>(null);
+    const [relatedProducts, setRelatedProducts] = useState<any[]>([]);
     const [quantity, setQuantity] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const foundProduct = products.find((p) => p.id === id);
-        if (foundProduct) {
-            setProduct(foundProduct);
-        } else if (id !== "demo") {
-            // Redirect or show not found - for now just keep as null
-            // In a real app, you might redirect to /shop or /404
+        async function fetchProductData() {
+            setIsLoading(true);
+
+            // Fetch main product
+            const { data: foundProduct, error: pError } = await supabase
+                .from('products')
+                .select('*')
+                .eq('id', id)
+                .single();
+
+            if (foundProduct) {
+                const mappedProduct = {
+                    ...foundProduct,
+                    longDescription: foundProduct.long_description,
+                    imageColor: foundProduct.image_color || "#F5EFDA",
+                    reviews: foundProduct.reviews_count,
+                    // Map icon names to components later in render
+                    features: foundProduct.features || [
+                        { icon: 'ShieldCheck', text: "Dermatologically Tested" },
+                        { icon: 'Truck', text: "Free Express Shipping" },
+                        { icon: 'RotateCcw', text: "30-Day Ritual Guarantee" },
+                    ]
+                };
+                setProduct(mappedProduct);
+
+                // Fetch related products
+                const { data: related } = await supabase
+                    .from('products')
+                    .select('*')
+                    .eq('category', foundProduct.category)
+                    .neq('id', id)
+                    .limit(4);
+
+                if (related) {
+                    setRelatedProducts(related.map(r => ({
+                        ...r,
+                        imageColor: r.image_color || "#F5EFDA"
+                    })));
+                }
+            }
+            setIsLoading(false);
         }
-        setIsLoading(false);
+        fetchProductData();
     }, [id]);
 
     if (isLoading) {
@@ -45,9 +86,7 @@ export default function DynamicProductPage() {
         );
     }
 
-    const relatedProducts = products
-        .filter((p) => p.category === product.category && p.id !== product.id)
-        .slice(0, 4);
+    // Removal of static relatedProducts calculation as it's now in state
 
     return (
         <div className="bg-background pb-24 pt-24">
@@ -136,12 +175,15 @@ export default function DynamicProductPage() {
 
                         {/* Features */}
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
-                            {product.features.map((feature, i) => (
-                                <div key={i} className="flex flex-col items-center text-center gap-2">
-                                    <feature.icon className="w-6 h-6 text-primary/70" />
-                                    <span className="text-[10px] uppercase tracking-widest font-bold text-foreground/60">{feature.text}</span>
-                                </div>
-                            ))}
+                            {product.features.map((feature: any, i: number) => {
+                                const Icon = iconMap[feature.icon] || ShieldCheck;
+                                return (
+                                    <div key={i} className="flex flex-col items-center text-center gap-2">
+                                        <Icon className="w-6 h-6 text-primary/70" />
+                                        <span className="text-[10px] uppercase tracking-widest font-bold text-foreground/60">{feature.text}</span>
+                                    </div>
+                                );
+                            })}
                         </div>
 
                         {/* Tabs / Details */}

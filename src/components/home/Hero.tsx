@@ -2,18 +2,42 @@
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
-import Image from "next/image";
+import { useEffect, useState } from "react";
+import { supabase } from "@/utils/supabase";
 
 export default function Hero() {
+    const [settings, setSettings] = useState<Record<string, string>>({
+        hero_title: "Reveal Your Natural Glow",
+        hero_tag: "Organic & Ethical Skincare",
+        hero_subtitle: "Luxury skincare formulated with rare botanicals to nourish your soul and rejuvenate your skin. Experience the Aunty Work difference."
+    });
+
+    useEffect(() => {
+        async function fetchSettings() {
+            const { data } = await supabase
+                .from('site_settings')
+                .select('*')
+                .in('key', ['hero_title', 'hero_tag', 'hero_subtitle']);
+
+            if (data) {
+                const s: Record<string, string> = {};
+                data.forEach(item => s[item.key] = item.value);
+                setSettings(prev => ({ ...prev, ...s }));
+            }
+        }
+        fetchSettings();
+    }, []);
+
+    // Split title by <br /> if present
+    const titleParts = settings.hero_title.split('<br />');
+
     return (
         <section className="relative h-[90vh] min-h-[600px] w-full overflow-hidden flex items-center">
             {/* Background Image Placeholder / Effect */}
             <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--secondary)_0%,_transparent_70%)] opacity-30" />
                 <div className="absolute inset-0 bg-black/5" />
-                {/* We'll use a placeholder colored div since image generation failed earlier */}
                 <div className="w-full h-full bg-[#F5F0E8] relative">
-                    {/* Subtle texture / pattern hint */}
                     <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#D4AF37 0.5px, transparent 0.5px)', backgroundSize: '24px 24px' }} />
                 </div>
             </div>
@@ -31,14 +55,14 @@ export default function Hero() {
                         transition={{ delay: 0.2, duration: 0.5 }}
                         className="inline-block text-primary font-medium tracking-[0.3em] uppercase mb-6 text-sm"
                     >
-                        Organic & Ethical Skincare
+                        {settings.hero_tag}
                     </motion.span>
                     <h1 className="text-5xl md:text-7xl font-serif text-foreground leading-[1.1] mb-8">
-                        Reveal Your <br />
-                        <span className="italic text-primary">Natural</span> Glow
+                        {titleParts[0]} {titleParts.length > 1 && <br />}
+                        <span className="italic text-primary">{titleParts[1] || ''}</span>
                     </h1>
                     <p className="text-lg md:text-xl text-foreground/70 mb-10 leading-relaxed font-light">
-                        Luxury skincare formulated with rare botanicals to nourish your soul and rejuvenate your skin. Experience the Aunty Work difference.
+                        {settings.hero_subtitle}
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4">
                         <Button size="lg" variant="luxury">
@@ -75,11 +99,9 @@ export default function Hero() {
                 >
                     <div className="absolute inset-4 border border-primary/20 -z-10 translate-x-4 translate-y-4" />
                     <div className="w-full h-full bg-[#E8DED1] rounded-sm overflow-hidden relative shadow-2xl">
-                        {/* Placeholder for Hero Image */}
-                        <div className="absolute inset-0 flex items-center justify-center text-primary/20 font-serif text-4xl italic">
+                        <div className="absolute inset-0 flex items-center justify-center text-primary/20 font-serif text-4xl italic text-center px-8">
                             Aunty Work Essence
                         </div>
-                        {/* Gradient overlay for premium feel */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                     </div>
                 </motion.div>

@@ -4,69 +4,49 @@ import { motion } from "framer-motion";
 import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Calendar, User, ArrowLeft, Share2, Facebook, Twitter, Mail } from "lucide-react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/utils/supabase";
 
 export default function BlogPostPage() {
     const params = useParams();
     const router = useRouter();
     const id = params.id as string;
 
-    // Mock post data - in a real app, this would come from a data file or CMS
-    const posts = {
-        "botanical-serums-101": {
-            title: "The Science of Botanical Serums",
-            date: "Feb 15, 2024",
-            author: "Dr. Elena Rossi",
-            category: "Rituals",
-            imageColor: "#F5EFDA",
-            content: `
-                <p>Botanical serums represent the pinnacle of clean beauty, merging the ancient wisdom of herbalism with the precision of modern dermatological science. At Aunty Work, we believe that the skin is a living ecosystem that thrives best when nourished with ingredients it recognizes as its own.</p>
-                
-                <h2>Why Plant-Based Lipids?</h2>
-                <p>Unlike synthetic emollients that merely sit on the surface of the skin, plant-based lipids possess a molecular structure remarkably similar to our skin's natural sebum. This allows them to integrate seamlessly into the skin's barrier, delivering deep hydration without clogging pores.</p>
-                
-                <p>Ingredients like Jojoba oil, Rosehip seed, and Sea Buckthorn are rich in essential fatty acids and antioxidants. These compounds work to neutralize free radicals—unstable molecules caused by environmental pollutants and UV exposure that accelerate the visible signs of aging.</p>
-                
-                <blockquote>"The most powerful laboratory is nature herself. We are simply its students, refining its gifts into rituals."</blockquote>
-                
-                <h2>The Ritual of Application</h2>
-                <p>To maximize the efficacy of your botanical serum, application is as important as the ingredients themselves. We recommend the following steps:</p>
-                <ul>
-                    <li>Warm 3-4 drops between the palms of your hands.</li>
-                    <li>Gently press into clean, damp skin.</li>
-                    <li>Use upward strokes to encourage lymphatic drainage.</li>
-                </ul>
-                
-                <p>By making this a mindful part of your morning and evening routine, you're not just applying a product—you're honoring your skin's natural rhythm.</p>
-            `
-        },
-        "evening-skincare-ritual": {
-            title: "Crafting Your Evening Sanctuary",
-            date: "Feb 10, 2024",
-            author: "Aunty Work",
-            category: "Mindfulness",
-            imageColor: "#F2E9E1",
-            content: `
-                <p>Your evening skin care routine is more than just a task to be completed before bed; it is an opportunity to transition from the noise of the day into the stillness of the night.</p>
-                
-                <h2>Creating the Environment</h2>
-                <p>Start by dimming the lights. Light a candle with notes of lavender or sandalwood. The olfactory sense is a direct gateway to the nervous system, and these scents signal to your brain that it's time to rest.</p>
-                
-                <h2>The Double Cleanse</h2>
-                <p>The first step in any truly effective evening ritual is the double cleanse. Use an oil-based cleanser first to remove SPF and pollutants, followed by a gentle water-based cleanser to deeply purify the pores.</p>
-                
-                <p>As you massage the products into your skin, focus on your breath. Inhale for four counts, exhale for six. Feel the tension leaving your jaw and your shoulders.</p>
-            `
-        }
-    };
+    const [post, setPost] = useState<any>(null);
+    const [loading, setLoading] = useState(true);
 
-    const post = posts[id as keyof typeof posts] || {
-        title: id?.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') || "Untitled Post",
-        date: "Feb 20, 2024",
-        author: "Lumière Team",
-        category: "Journal",
-        imageColor: "#F5F5F5",
-        content: "<p>The story of this botanical journey is yet to be told. Check back soon for more wisdom and rituals.</p>"
-    };
+    useEffect(() => {
+        async function fetchPost() {
+            const { data } = await supabase
+                .from('blog_posts')
+                .select('*')
+                .eq('id', id)
+                .single();
+
+            if (data) {
+                setPost({
+                    ...data,
+                    imageColor: data.image_color
+                });
+            }
+            setLoading(false);
+        }
+        fetchPost();
+    }, [id]);
+
+    if (loading) return <div className="min-h-screen flex items-center justify-center font-serif italic text-foreground/40 text-xl">Loading Article...</div>;
+
+    if (!post) {
+        return (
+            <div className="min-h-screen flex flex-col items-center justify-center text-center p-4">
+                <h1 className="text-4xl font-serif font-bold mb-4">Post Not Found</h1>
+                <p className="text-foreground/60 mb-8 max-w-md">This entry in the journal does not exist or has been removed from our archives.</p>
+                <Button variant="luxury" onClick={() => router.push("/blog")}>
+                    Back to Journal
+                </Button>
+            </div>
+        );
+    }
 
     return (
         <div className="bg-background pt-24 pb-24">
