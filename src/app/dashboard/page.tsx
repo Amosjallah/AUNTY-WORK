@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 export default function AdminPage() {
     const [loading, setLoading] = useState(true);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [productCount, setProductCount] = useState(0);
     const router = useRouter();
 
     useEffect(() => {
@@ -28,6 +29,11 @@ export default function AdminPage() {
                 setIsAdmin(false);
             } else {
                 setIsAdmin(true);
+                // Fetch product count
+                const { count } = await supabase
+                    .from('products')
+                    .select('*', { count: 'exact', head: true });
+                setProductCount(count || 0);
             }
             setLoading(false);
         }
@@ -81,7 +87,7 @@ export default function AdminPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div className="bg-card p-6 rounded-2xl shadow-sm border hover:shadow-md transition-shadow cursor-default">
                     <h3 className="text-sm font-medium text-muted-foreground mb-2 uppercase tracking-wider">Total Products</h3>
-                    <p className="text-3xl font-serif">4</p>
+                    <p className="text-3xl font-serif">{productCount}</p>
                 </div>
                 <div className="bg-card p-6 rounded-2xl shadow-sm border hover:shadow-md transition-shadow cursor-default">
                     <h3 className="text-sm font-medium text-muted-foreground mb-2 uppercase tracking-wider">Site Users</h3>
@@ -100,7 +106,12 @@ export default function AdminPage() {
                 <div className="p-8 border rounded-3xl bg-secondary/20">
                     <h2 className="text-2xl font-serif mb-4 text-foreground">Manage Inventory</h2>
                     <p className="text-muted-foreground mb-6">Add, edit, or remove products from your catalog.</p>
-                    <button className="text-primary font-medium hover:underline">View All Products →</button>
+                    <button
+                        onClick={() => router.push('/dashboard/products')}
+                        className="text-primary font-medium hover:underline text-left w-full"
+                    >
+                        View All Products →
+                    </button>
                 </div>
             </div>
         </div>
