@@ -6,6 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import {
     LayoutDashboard,
     Box,
+    Tag,
     ShoppingBag,
     Users,
     Megaphone,
@@ -24,6 +25,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const NAV_ITEMS = [
     { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
     { name: 'Products', href: '/dashboard/products', icon: Box },
+    { name: 'Categories', href: '/dashboard/categories', icon: Tag },
     { name: 'Orders', href: '/dashboard/orders', icon: ShoppingBag },
     { name: 'Customers', href: '/dashboard/customers', icon: Users },
     { name: 'Marketing', href: '/dashboard/marketing', icon: Megaphone },
