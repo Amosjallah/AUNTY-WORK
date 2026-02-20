@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: var(--font-playfair);
+  --font-sans: var(--font-inter);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+}
+
+:root {
+  /* Feminine Luxury Palette */
+  --background: #FDFBF7; /* Cream/Off-White */
+  --foreground: #1A1A1A; /* Dark Charcoal */
+  
+  --primary: #D4AF37; /* Gold */
+  --secondary: #F2Dbd5; /* Soft Pink */
+  --accent: #E5E5E5; /* Light Gray for borders/dividers */
+
+  --font-playfair: "Playfair Display", serif;
+  --font-inter: "Inter", sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark Mode Palette (optional but good to have) */
+    --background: #0F0F0F;
+    --foreground: #FDFBF7;
+    --primary: #E5C158; 
+    --secondary: #3A2E2E; 
+    --accent: #2A2A2A;
+  }
+}
+
+/* Typography Base */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Utilities */
+.container-custom {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
