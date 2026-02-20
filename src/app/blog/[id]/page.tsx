@@ -46,7 +46,7 @@ export default function BlogPostPage() {
             category: "Mindfulness",
             imageColor: "#F2E9E1",
             content: `
-                <p>Your evening skincare routine is more than just a task to be completed before bed; it is an opportunity to transition from the noise of the day into the stillness of the night.</p>
+                <p>Your evening skin care routine is more than just a task to be completed before bed; it is an opportunity to transition from the noise of the day into the stillness of the night.</p>
                 
                 <h2>Creating the Environment</h2>
                 <p>Start by dimming the lights. Light a candle with notes of lavender or sandalwood. The olfactory sense is a direct gateway to the nervous system, and these scents signal to your brain that it's time to rest.</p>
