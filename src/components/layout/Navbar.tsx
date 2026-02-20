@@ -2,14 +2,17 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Search, ShoppingBag, User, Menu, X } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { Search, ShoppingBag, User, Menu, X, LogOut, LayoutDashboard } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import clsx from "clsx";
+import { supabase } from "@/utils/supabase";
 
 export default function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [userRole, setUserRole] = useState<string | null>(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const pathname = usePathname();
 
     useEffect(() => {
@@ -17,7 +20,40 @@ export default function Navbar() {
             setIsScrolled(window.scrollY > 20);
         };
         window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
+
+        // Check authentication state
+        const checkAuth = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+                setIsLoggedIn(true);
+                const { data: profile } = await supabase
+                    .from('profiles')
+                    .select('role')
+                    .eq('id', session.user.id)
+                    .single();
+                setUserRole(profile?.role || 'user');
+            } else {
+                setIsLoggedIn(false);
+                setUserRole(null);
+            }
+        };
+
+        checkAuth();
+
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            if (session) {
+                setIsLoggedIn(true);
+                checkAuth(); // Re-fetch profile
+            } else {
+                setIsLoggedIn(false);
+                setUserRole(null);
+            }
+        });
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            subscription.unsubscribe();
+        };
     }, []);
 
     const navLinks = [
@@ -26,6 +62,10 @@ export default function Navbar() {
         { name: "About", href: "/about" },
         { name: "Contact", href: "/contact" },
     ];
+
+    if (userRole === 'admin') {
+        navLinks.push({ name: "Dashboard", href: "/dashboard" });
+    }
 
     return (
         <header
@@ -71,9 +111,31 @@ export default function Navbar() {
                     <button className="hidden md:block hover:text-primary transition-colors">
                         <Search className="w-5 h-5" />
                     </button>
-                    <Link href="/auth" className="hidden md:block hover:text-primary transition-colors">
-                        <User className="w-5 h-5" />
-                    </Link>
+
+                    {isLoggedIn ? (
+                        <div className="hidden md:flex items-center gap-4">
+                            {userRole === 'admin' && (
+                                <Link href="/dashboard" className="hover:text-primary transition-colors">
+                                    <LayoutDashboard className="w-5 h-5" />
+                                </Link>
+                            )}
+                            <button
+                                onClick={async () => {
+                                    await supabase.auth.signOut();
+                                    setUserRole(null);
+                                    setIsLoggedIn(false);
+                                }}
+                                className="hover:text-primary transition-colors"
+                            >
+                                <LogOut className="w-5 h-5" />
+                            </button>
+                        </div>
+                    ) : (
+                        <Link href="/auth" className="hidden md:block hover:text-primary transition-colors">
+                            <User className="w-5 h-5" />
+                        </Link>
+                    )}
+
                     <Link href="/cart" className="hover:text-primary transition-colors relative">
                         <ShoppingBag className="w-5 h-5" />
                         <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] text-white">
@@ -97,19 +159,41 @@ export default function Navbar() {
                                 <Link
                                     key={link.name}
                                     href={link.href}
-                                    className="text-lg font-medium hover:text-primary py-2"
+                                    className="text-lg font-medium hover:text-primary py-2 capitalize"
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     {link.name}
                                 </Link>
                             ))}
-                            <div className="flex gap-6 mt-6 pt-6 border-t border-accent w-full justify-center">
+                            <div className="flex flex-wrap gap-8 mt-6 pt-6 border-t border-accent w-full justify-center">
                                 <button className="flex flex-col items-center gap-1 text-xs uppercase tracking-wider hover:text-primary">
                                     <Search className="w-6 h-6" /> Search
                                 </button>
-                                <Link href="/auth" className="flex flex-col items-center gap-1 text-xs uppercase tracking-wider hover:text-primary" onClick={() => setIsMobileMenuOpen(false)}>
-                                    <User className="w-6 h-6" /> Account
-                                </Link>
+
+                                {isLoggedIn ? (
+                                    <>
+                                        {userRole === 'admin' && (
+                                            <Link href="/dashboard" className="flex flex-col items-center gap-1 text-xs uppercase tracking-wider hover:text-primary" onClick={() => setIsMobileMenuOpen(false)}>
+                                                <LayoutDashboard className="w-6 h-6" /> Admin
+                                            </Link>
+                                        )}
+                                        <button
+                                            onClick={async () => {
+                                                await supabase.auth.signOut();
+                                                setIsLoggedIn(false);
+                                                setUserRole(null);
+                                                setIsMobileMenuOpen(false);
+                                            }}
+                                            className="flex flex-col items-center gap-1 text-xs uppercase tracking-wider hover:text-primary"
+                                        >
+                                            <LogOut className="w-6 h-6" /> Logout
+                                        </button>
+                                    </>
+                                ) : (
+                                    <Link href="/auth" className="flex flex-col items-center gap-1 text-xs uppercase tracking-wider hover:text-primary" onClick={() => setIsMobileMenuOpen(false)}>
+                                        <User className="w-6 h-6" /> Login
+                                    </Link>
+                                )}
                             </div>
                         </nav>
                     </motion.div>

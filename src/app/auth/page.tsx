@@ -28,7 +28,24 @@ export default function AuthPage() {
                     password,
                 });
                 if (error) throw error;
-                router.push('/');
+
+                const { data: { user } } = await supabase.auth.getUser();
+
+                if (user) {
+                    const { data: profile } = await supabase
+                        .from('profiles')
+                        .select('role')
+                        .eq('id', user.id)
+                        .single();
+
+                    if (profile?.role === 'admin') {
+                        router.push('/dashboard');
+                    } else {
+                        router.push('/');
+                    }
+                } else {
+                    router.push('/');
+                }
             } else {
                 const { error } = await supabase.auth.signUp({
                     email,
