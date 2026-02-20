@@ -99,7 +99,15 @@ export default function DynamicProductPage() {
                             animate={{ opacity: 1, scale: 1 }}
                             className="aspect-square bg-[#F5EFDA] flex items-center justify-center relative overflow-hidden group rounded-sm"
                         >
-                            <span className="text-foreground/20 font-serif text-4xl italic text-center px-8">{product.name}</span>
+                            {product.image_url ? (
+                                <img
+                                    src={product.image_url}
+                                    alt={product.name}
+                                    className="w-full h-full object-cover"
+                                />
+                            ) : (
+                                <span className="text-foreground/20 font-serif text-4xl italic text-center px-8">{product.name}</span>
+                            )}
                             <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent" />
                         </motion.div>
                         <div className="grid grid-cols-4 gap-4">

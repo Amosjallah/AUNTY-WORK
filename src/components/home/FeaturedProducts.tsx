@@ -24,6 +24,7 @@ export default function FeaturedProducts() {
                     category: p.category,
                     price: p.price,
                     rating: p.rating,
+                    imageUrl: p.image_url,
                     imageColor: p.image_color || "#F5F5F5",
                     isNew: true // Placeholder
                 }));

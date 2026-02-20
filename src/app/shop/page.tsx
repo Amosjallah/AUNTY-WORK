@@ -1,19 +1,34 @@
 "use client";
 
-import { useState } from "react";
-import { products, categories } from "@/data/products";
+import { useEffect, useState } from "react";
 import ProductCard from "@/components/ui/ProductCard";
 import { motion, AnimatePresence } from "framer-motion";
+import { supabase } from "@/utils/supabase";
 import clsx from "clsx";
+
+const categories = ["All", "Cleansers", "Serums", "Moisturizers", "Masks", "Best Sellers"];
 
 export default function ShopPage() {
     const [activeCategory, setActiveCategory] = useState("All");
+    const [products, setProducts] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
 
-    const filteredProducts = activeCategory === "All"
-        ? products
-        : products.filter(p => p.category === activeCategory);
+    useEffect(() => {
+        async function fetchProducts() {
+            setLoading(true);
+            let query = supabase.from('products').select('*');
 
-    // Helper to get a consistent color for placeholders based on the product ID
+            if (activeCategory !== "All") {
+                query = query.eq('category', activeCategory.toLowerCase());
+            }
+
+            const { data } = await query.order('created_at', { ascending: false });
+            if (data) setProducts(data);
+            setLoading(false);
+        }
+        fetchProducts();
+    }, [activeCategory]);
+
     const getPlaceholderColor = (id: string) => {
         const colors = ["#F5EFDA", "#F2E9E1", "#E5E7EB", "#FDE2E4"];
         const index = id.length % colors.length;
@@ -79,26 +94,35 @@ export default function ShopPage() {
             {/* Product Grid */}
             <section className="py-16">
                 <div className="container-custom">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16">
-                        <AnimatePresence mode="popLayout">
-                            {filteredProducts.map((product) => (
-                                <ProductCard
-                                    key={product.id}
-                                    id={product.id}
-                                    name={product.name}
-                                    price={product.price}
-                                    category={product.category}
-                                    rating={product.rating}
-                                    imageColor={getPlaceholderColor(product.id)}
-                                />
-                            ))}
-                        </AnimatePresence>
-                    </div>
-
-                    {filteredProducts.length === 0 && (
-                        <div className="text-center py-32">
-                            <p className="text-xl font-serif italic text-foreground/40">No products found in this category.</p>
+                    {loading ? (
+                        <div className="flex items-center justify-center py-32">
+                            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
                         </div>
+                    ) : (
+                        <>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16">
+                                <AnimatePresence mode="popLayout">
+                                    {products.map((product: any) => (
+                                        <ProductCard
+                                            key={product.id}
+                                            id={product.id}
+                                            name={product.name}
+                                            price={product.price}
+                                            category={product.category}
+                                            rating={product.rating}
+                                            imageUrl={product.image_url}
+                                            imageColor={getPlaceholderColor(product.id)}
+                                        />
+                                    ))}
+                                </AnimatePresence>
+                            </div>
+
+                            {products.length === 0 && (
+                                <div className="text-center py-32">
+                                    <p className="text-xl font-serif italic text-foreground/40">No products found in this category.</p>
+                                </div>
+                            )}
+                        </>
                     )}
                 </div>
             </section>

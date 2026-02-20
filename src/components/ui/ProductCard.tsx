@@ -12,6 +12,7 @@ interface ProductCardProps {
     category: string;
     rating: number;
     imageColor: string;
+    imageUrl?: string;
     isNew?: boolean;
 }
 
@@ -22,6 +23,7 @@ export default function ProductCard({
     category,
     rating,
     imageColor,
+    imageUrl,
     isNew,
 }: ProductCardProps) {
     return (
@@ -31,14 +33,24 @@ export default function ProductCard({
             viewport={{ once: true }}
             className="group"
         >
-            <div className="relative aspect-[3/4] mb-4 bg-accent/5 backdrop-blur-sm overflow-hidden">
-                {/* Product Image Placeholder */}
-                <div
-                    className="w-full h-full transition-transform duration-700 group-hover:scale-110 flex items-center justify-center"
-                    style={{ backgroundColor: imageColor }}
-                >
-                    <span className="text-foreground/10 font-serif text-xl italic">{name}</span>
-                </div>
+            <div className="relative aspect-[3/4] mb-4 bg-accent/5 backdrop-blur-sm overflow-hidden rounded-sm">
+                <Link href={`/product/${id}`} className="block w-full h-full">
+                    {/* Product Image */}
+                    {imageUrl ? (
+                        <img
+                            src={imageUrl}
+                            alt={name}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                    ) : (
+                        <div
+                            className="w-full h-full transition-transform duration-700 group-hover:scale-110 flex items-center justify-center"
+                            style={{ backgroundColor: imageColor }}
+                        >
+                            <span className="text-foreground/10 font-serif text-xl italic">{name}</span>
+                        </div>
+                    )}
+                </Link>
 
                 {/* Badges */}
                 {isNew && (
