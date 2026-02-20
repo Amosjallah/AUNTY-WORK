@@ -24,7 +24,6 @@ export default function Navbar() {
         { name: "Shop", href: "/shop" },
         { name: "Best Sellers", href: "/shop?category=best-sellers" },
         { name: "About", href: "/about" },
-        { name: "Journal", href: "/blog" },
         { name: "Contact", href: "/contact" },
     ];
 

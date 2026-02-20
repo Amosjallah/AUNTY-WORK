@@ -68,9 +68,6 @@ export default function Hero() {
                         <Button size="lg" variant="luxury">
                             Shop Collection
                         </Button>
-                        <Button size="lg" variant="outline">
-                            The Journal
-                        </Button>
                     </div>
 
                     <div className="mt-16 flex items-center gap-8 border-t border-accent/20 pt-8">

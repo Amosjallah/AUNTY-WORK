@@ -84,10 +84,6 @@ export default function AdminPage() {
                     <p className="text-3xl font-serif">4</p>
                 </div>
                 <div className="bg-card p-6 rounded-2xl shadow-sm border hover:shadow-md transition-shadow cursor-default">
-                    <h3 className="text-sm font-medium text-muted-foreground mb-2 uppercase tracking-wider">Total Blog Posts</h3>
-                    <p className="text-3xl font-serif">3</p>
-                </div>
-                <div className="bg-card p-6 rounded-2xl shadow-sm border hover:shadow-md transition-shadow cursor-default">
                     <h3 className="text-sm font-medium text-muted-foreground mb-2 uppercase tracking-wider">Site Users</h3>
                     <p className="text-3xl font-serif">1</p>
                 </div>
@@ -105,11 +101,6 @@ export default function AdminPage() {
                     <h2 className="text-2xl font-serif mb-4 text-foreground">Manage Inventory</h2>
                     <p className="text-muted-foreground mb-6">Add, edit, or remove products from your catalog.</p>
                     <button className="text-primary font-medium hover:underline">View All Products →</button>
-                </div>
-                <div className="p-8 border rounded-3xl bg-secondary/20">
-                    <h2 className="text-2xl font-serif mb-4 text-foreground">Journal Management</h2>
-                    <p className="text-muted-foreground mb-6">Write new stories and manage your existing blog posts.</p>
-                    <button className="text-primary font-medium hover:underline">View All Posts →</button>
                 </div>
             </div>
         </div>
