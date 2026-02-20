@@ -23,7 +23,7 @@ export default function AboutPage() {
         {
             icon: Heart,
             title: "Kind to All",
-            description: "Lumière is, and always will be, 100% cruelty-free and vegan. We believe beauty should never come at the expense of another."
+            description: "TOUCHEEGLOW is, and always will be, 100% cruelty-free and vegan. We believe beauty should never come at the expense of another."
         },
         {
             icon: Sparkles,
@@ -61,12 +61,12 @@ export default function AboutPage() {
                             transition={{ delay: 0.2 }}
                             className="text-lg md:text-xl text-foreground/60 font-light leading-relaxed mb-10"
                         >
-                            Aunty Work was founded on a simple realization: the modern world is fast, but beauty requires patience.
+                            TOUCHEEGLOW was founded on a simple realization: the modern world is fast, but beauty requires patience.
                             We returned to the origins of botanical healing to create a sanctuary for your skin.
                         </motion.p>
                         <blockquote className="border-l-2 border-primary pl-8 italic text-lg text-foreground/60 mb-8 py-2">
-                            "Aunty Work transformed my morning ritual into a luxury experience I actually look forward to."
-                            <footer className="mt-4 text-sm font-sans font-bold not-italic uppercase tracking-widest">— Aunty, Founder</footer>
+                            "TOUCHEEGLOW transformed my morning ritual into a luxury experience I actually look forward to."
+                            <footer className="mt-4 text-sm font-sans font-bold not-italic uppercase tracking-widest">— Touchee G., Founder</footer>
                         </blockquote>
                     </div>
                 </div>
@@ -92,7 +92,7 @@ export default function AboutPage() {
                             <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">A New Standard of Purity</h2>
                             <div className="space-y-6 text-foreground/70 font-light leading-relaxed">
                                 <p>
-                                    In an era of synthetic shortcuts, we choose the path of integrity. Every Lumière product
+                                    In an era of synthetic shortcuts, we choose the path of integrity. Every TOUCHEEGLOW product
                                     begins with cold-pressed oils and wild-harvested resins, processed in small batches
                                     to preserve their molecular potency.
                                 </p>

@@ -116,7 +116,7 @@ export default function ContactPage() {
                                             </div>
                                             <div>
                                                 <h4 className="text-[10px] uppercase tracking-widest font-bold text-foreground/40 mb-1">Email Us</h4>
-                                                <p className="text-foreground/70 font-light">concierge@auntywork.com</p>
+                                                <p className="text-foreground/70 font-light">hello@toucheeglow.com</p>
                                             </div>
                                         </div>
                                         <div className="flex gap-4">

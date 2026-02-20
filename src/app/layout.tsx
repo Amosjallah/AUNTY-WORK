@@ -17,7 +17,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Aunty Work – Luxury Skin Care",
+  title: "TOUCHEEGLOW – Luxury Skin Care",
   description: "Premium skin care for radiant, glowing skin.",
 };
 

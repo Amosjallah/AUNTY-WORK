@@ -9,7 +9,7 @@ export default function Hero() {
     const [settings, setSettings] = useState<Record<string, string>>({
         hero_title: "Reveal Your Natural Glow",
         hero_tag: "Organic & Ethical Skincare",
-        hero_subtitle: "Luxury skincare formulated with rare botanicals to nourish your soul and rejuvenate your skin. Experience the Aunty Work difference."
+        hero_subtitle: "Luxury skincare formulated with rare botanicals to nourish your soul and rejuvenate your skin. Experience the TOUCHEEGLOW difference."
     });
 
     useEffect(() => {
@@ -97,7 +97,7 @@ export default function Hero() {
                     <div className="absolute inset-4 border border-primary/20 -z-10 translate-x-4 translate-y-4" />
                     <div className="w-full h-full bg-[#E8DED1] rounded-sm overflow-hidden relative shadow-2xl">
                         <div className="absolute inset-0 flex items-center justify-center text-primary/20 font-serif text-4xl italic text-center px-8">
-                            Aunty Work Essence
+                            TOUCHEEGLOW ESSENCE
                         </div>
                         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                     </div>
